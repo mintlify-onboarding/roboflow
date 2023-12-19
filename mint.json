@@ -1,0 +1,45 @@
+{
+    "name": "Roboflow",
+    "logo": {
+      "light": "/logo/light.png",
+      "dark": "/logo/dark.png"
+    },
+    "favicon": "/favicon.png",
+    "colors": {
+      "primary": "#6706EE",
+      "light": "#8A3DF6",
+      "dark": "#6706EE"
+    },
+    "topbarCtaButton": {
+      "name": "Dashboard",
+      "url": "https://app.roboflow.com/"
+    },
+    "anchors": [
+      {
+        "name": "Forum",
+        "icon": "comments",
+        "url": "https://discuss.roboflow.com/"
+      },
+      {
+        "name": "Integrations",
+        "icon": "puzzle",
+        "url": "https://roboflow.com/integrations"
+      },
+      {
+        "name": "Blog",
+        "icon": "newspaper",
+        "url": "https://blog.roboflow.com/"
+      }
+    ],
+    "navigation": [
+      {
+        "group": "",
+        "pages": [""]
+      }
+    ],
+    "footerSocials":
+      {
+          "twitter": "https://twitter.com/roboflow?lang=en",
+          "linkedin": "https://www.linkedin.com/company/roboflow-ai/"
+      }
+  }
