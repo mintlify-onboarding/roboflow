@@ -1,0 +1,23 @@
+---
+title: "Create a Dataset Version"
+---
+
+A version is a point-in-time snapshot of your dataset. We keep these versions since by keeping track of exactly which images, preprocessing, and augmentation steps were used in each iteration of your model, you maintain the ability to reproduce the results. This allows you to scientifically test across various models and frameworks while remaining confident that the results are attributable to the model changes and not due to a bug/change in the data pipeline.
+
+Once a version is created, it is frozen in time, which means changes to the project whether that be adding/removing images, annotations, or other data, won't affect versions that were created before. 
+
+### How To Create a Dataset Version
+
+To create a dataset version, click "Versions" in the sidebar associated with your Roboflow project. Then, click "Generate New Version".
+
+From this page, you can set a train/test/valid split and specify preprocessing steps and augmentations for your new dataset version.
+
+![](/images/datasets/Screenshot%202023-06-22%20at%2015.37.50.png)
+
+Once you have specified the preprocessing steps and augmentations you want to apply to your data, click "Generate". This will generate a new dataset version. You can then use this dataset version to train a model in Roboflow. You can also [export your dataset](/datasets/exporting-data) for use in training a model manually.
+
+### Readjusting Train/Validation/Test Splits
+
+During the version creation process, you can also readjust the balance of your training, validation and test set splitting. To do this, go to "Step 2: Train/Test Split" and click the "Rebalance" button.
+
+![](/images/datasets/image.png)

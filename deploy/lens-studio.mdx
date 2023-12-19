@@ -1,0 +1,109 @@
+---
+title: "Lens Studio"
+---
+
+With a trained model ready in Roboflow, you can deploy your model to SnapML.
+
+## Task Support
+
+The following task types are supported by the hosted API:
+
+| Task Type             | Supported by Lens Studio                         |
+| --------------------- | ------------------------------------------------ |
+| Object Detection      | [✅](https://emojipedia.org/check-mark-button/) |
+| Classification        |                                                 |
+| Instance Segmentation |                                                 |
+| Semantic Segmentation |                                                 |
+
+_Note: Only models trained using Roboflow Train 3.0 are supported. You can check if a model is trained on Roboflow Train 3.0 by checking the Versions page associated with your model._
+
+## Deploy a Model to Lens Studio
+
+Click on “Deploy” in the Roboflow sidebar, then scroll down until you see the “Use with Snap Lens Studio” box. Click “Export to Lens Studio”.
+
+
+![](https://lh5.googleusercontent.com/HbE_7PuAAyj4xpQAd1mrJlOESybVheHy-lUF3BJcSbE_i0tpV7qPjrmRdKWBQ_3iZby6Dr-Uz0oRdUDbPRkJh3A9XXVafpoB0T7HgmdvQYC_w3hGqCcx3gMcd3l-ztKgCaKCiOIaT8B3y_BFseWDBY0)
+
+When you click this button, a pop up will appear showing information about the classes in your model.
+
+These classes are ordered and will be used in the next step for configuring your model in Lens Studio. Take note of the class list for future use.
+
+In addition, two files will be downloaded:
+
+1. 1.  
+The Roboflow Lens Studio template, with which you can use your weights in an application with minimal configuration, and;
+
+2. 2.  
+Your model weights.
+
+The Roboflow Lens Studio template is 100 MB, so downloading the template may take a few moments depending on your internet connection.
+
+With the template ready, we can start setting up our model in Lens Studio.
+
+### Configure Model in Lens Studio
+
+If you haven’t already installed Lens Studio, go to the [Snap AR website](https://ar.snap.com/lens-studio) and download the latest version of Lens Studio. With Lens Studio installed, we are ready to start configuring our model.
+
+For this section, we will use the Roboflow Lens Studio template. But, you can use your model weights in any application with the [MLController component](https://docs.snap.com/lens-studio/references/templates/ml/object-detection).
+
+Unzip the Roboflow Lens Studio template you downloaded earlier, then open up the “Roboflow-Lens-Template.Isproj” file in the unzipped folder.
+
+
+![](https://lh4.googleusercontent.com/5KOjmy17im2oQ0rwTfZvFYVOTa9E-QDJTm_fR_8hNvL9wBYkX0vAMHBjFkxx6gmdW-L0bSyhUamn-1bjWAKo5gVNokHeN11oj3rBkA-7-XPHJqlS7Wqwz1Bqvk8Lo0hODZRh64eye-fgOKzpvqHbVhw)
+
+
+When you open the application, you will see something like this:
+
+
+![](https://lh4.googleusercontent.com/eWdhDrct6IDXCD1x9vsb1B4XOaiVKNCv2c6FepMK4oQRLeV9M_UeMh9ook6nDqHz3DDX29c5hJIWelGEYqtRutFU3obL9ecVylj7YyTmett3VSB_ZmvihJ__CI0joV10fh2_mV0I53TDSbU-lRd3Zbw)
+
+
+By default, the template uses a coin counting model. For this example, we will use the playing cards model we built earlier. This application draws boxes around each prediction, but you can add your own filters and logic using Lens Studio.
+
+Click the “ML Controller” box at the top of the left sidebar in Lens Studio:
+
+
+![](https://lh5.googleusercontent.com/Y3-dqMnf9pRu8XkSjOcudoEBf8ZSGQl9btO-Mxks_OhJkixfeV8ap-s958fLxSbld7bS_qLXfINkNoNLp2j1FQRiDnkcclKv1kZHmiDGtrcvczvkHfvrJKwjt0XR2BedWffLNp1DuZ5QKGdsSoQJMuM)
+
+
+This will open up a box in which you can configure your model for use in the application next to the preview window:
+
+
+![](https://lh5.googleusercontent.com/5wPww2mRXC6bPD5DYmjIwCe1SeD14ajvTwNV2hwAPyvQGcmSrW9lns6LewnLOuCDjeHdzTygV2juaMXiZ3FcycsBTSLsvwAmgzOt2QDDhP20gboKUPCYcqbK3mO768YYSgm4k3GaN5HO_ewK7mf1cXw)
+
+
+Our demo application is configured for the coin counter example. To use your own model, first click the “ML Model” box:
+
+
+![](https://lh3.googleusercontent.com/OkWqq6COTZtmHnCwr_gUYWi7o0n7lmbKxMxuJ_D-EGcIOBCDpNfSoLHD7Ac1doWd0kLcNtMtKdCGibWNNXHywqTLFgUzZeS341yncJdamYbO4eytaWLb1f69VRwqoH8sU7fv63Pi-LGipJZnUFuPbVg)
+
+
+Then, drag the weights downloaded from Roboflow into the pop up box:
+
+When you drag in the weights, you will be prompted with some configuration options. In the “Inputs” section of the pop up, set each “Scale” value to 0.0039\. Leave the bias values as they are by default.
+
+
+![](https://lh6.googleusercontent.com/RscT9bOvkBCSz6VUQBx5oEI4SlrfprAzmsb0iCgLxozyh2_k723Cpa1d-OpqIYcq3_syUkhz1tuMJWEbwyFHzTziy-S3b6pzZuCvCtMzj9_SU4vFFPDwYKgphiyUzVkvHifF8aWnKdmsVJbdWhMmDRY)
+
+
+Then, click “Import” to import your model.
+
+### Configure Classes in Lens Studio
+
+We now have our model loaded into Lens Studio. There is one more step: tell our model what classes we are using.
+
+In the “Class Settings” tab below the ML Model button that we used earlier, you will see a list of classes. These are configured for a coin counter example in our demo project, but if you are working with your own Lens Studio project these values will be blank.
+
+
+![](https://lh5.googleusercontent.com/n4pbjCm1SKo2KpnoCXGB9ikeNPLlRXE7oaS7Aq4DzCFCG9NlcewJx6eqdJPaq4WvYFQKggCQWASZdmX8shBYeb9dWe7i6nVucEGJanZCIYyY9nXR3j9JXQj1PvKDdN5f-dDUVsIk53QVQsUeE_sO57k)
+
+
+Here, we need to set our class names and labels. The labels must be in the order presented in the Roboflow dashboard. Here is an example of setting one of our values for the playing card application:
+
+
+![](https://lh5.googleusercontent.com/KkSCIgEVtfMciDaG9NtaPhz0zwlBvWnj7QyBuSKr1-BwlZl_gOvp3zoCTl4fNfb91dhDC46b_hQ2W5k9sY83t28uMLW3VREm5NNHB3y2V_B_qk4ry6APE6MUFbIOrRu7pjzBiD5dDOecsuLDaYXyn4w)
+
+
+We need to do this configuration for each class in our model. You must specify all classes in your model so Snap can interpret the information in the model weights.
+
+Now our application is ready to use! You can use the “Preview” box to use your application on your computer, or demo your application on your own device using the [Pairing with Snapchat feature](https://docs.snap.com/lens-studio/references/guides/general/pairing-to-snapchat).

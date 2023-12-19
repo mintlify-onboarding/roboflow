@@ -1,0 +1,83 @@
+---
+title: "NVIDIA Jetson"
+---
+
+Prefer to learn using video? Check out our [NVIDIA Jetson deployment guide video](https://www.youtube.com/watch?v=X9jt8qb%5Figo).
+
+The [Roboflow Inference server](https://github.com/roboflow-ai/inference-server) is a drop-in replacement for the [Hosted Inference AP](/deploy/hosted-api/object-detection)I that can be deployed on your own hardware. We have optimized it to get maximum performance from the NVIDIA Jetson line of edge-AI devices by specifically tailoring the drivers, libraries, and binaries specifically to its CPU and GPU architectures.
+
+## Task Support
+
+The following task types are supported by the hosted API:
+
+| Task Type             | Supported by NVIDIA Jetson                       |
+| --------------------- | ------------------------------------------------ |
+| Object Detection      | [✅](https://emojipedia.org/check-mark-button/) |
+| Classification        | [✅](https://emojipedia.org/check-mark-button/) |
+| Instance Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+| Semantic Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+
+## Installation
+
+You can take the edge acceleration version of your model to the NVIDIA Jetson, where you may need realtime speeds with limited hardware resources.
+
+### Step #1: Flash Jetson Device
+
+Ensure that your Jetson is flashed with Jetpack 4.5, 4.6, or 5.1\. You can check you existing with this repository from Jetson Hacks
+
+```
+git clone https://github.com/jetsonhacks/jetsonUtilities.git
+cd jetsonUtilities
+python jetsonInfo.py
+```
+
+### Step #2: Run Docker Container
+
+Next, run the Roboflow Inference Server using the accompanying Docker container:
+
+```
+sudo docker run --privileged --net=host --runtime=nvidia --mount source=roboflow,target=/tmp/cache -e NUM_WORKERS=1 roboflow/roboflow-inference-server-jetson-4.5.0:latest
+```
+
+The docker image you need depends on what Jetpack version you are using.
+
+* Jetpack 4.5: roboflow/roboflow-inference-server-jetson-4.5.0
+
+* Jetpack 4.6: roboflow/roboflow-inference-server-jetson-4.6.1
+
+* Jetpack 5.1: roboflow/roboflow-inference-server-jetson-5.1.1
+
+The Jetson images default to using a CUDA execution provider. To use TensorRT, set the environment variable `ONNXRUNTIME_EXECUTION_PROVIDERS=TensorrtExecutionProvider`. Note, while using TensorRT can increase performance, it also incurs an additional startup compilation cost.
+
+### Step #3: Use the Server
+
+You can now use the server to run inference on any of your models. The following command shows the syntax for making a request to the inference API via `curl`:
+
+```
+base64 your_img.jpg | curl -d @- "http://localhost:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+```
+
+When you send a request for the first time, your model will compile on your Jetson device for 5-10 minutes.
+
+
+### Expected Performance
+
+There are _many_ factors that affect the performance of a particular inference pipeline including model size, input image size, model input size, confidence threshold, etc. For those looking for a rough estimate of performance, we provide the benchmarks below:
+
+**Config:**
+
+Model Type: Roboflow 3.0 Fast
+
+Model Input Resolution: 640 x 640
+
+Input Image Size: 1024 x 1024
+
+Hardware: Jetson Orin Nano running Jetpack 5.1.1
+
+**Performance:**
+
+Python Script via [pip install inference](https://github.com/roboflow/inference): 30 FPS
+
+HTTP Requests to [roboflow/roboflow-inference-server-jetson-5.1.1:0.9.1](https://github.com/roboflow/inference#inference-client): 15FPS
+
+More benchmarks for varying configurations coming soon!

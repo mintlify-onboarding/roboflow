@@ -1,0 +1,38 @@
+---
+title: "Manage Batches"
+---
+
+### Batches in Roboflow
+
+Once you [upload your data](/datasets/adding-data) into Roboflow, that data you uploaded turns into a batch. They're a group of images, so you can easily track them through the dataset process in Roboflow. You can view this process on the Annotate page.
+
+![](/images/datasets/image.png)
+
+The view in the Annotate page. Note: The review column may not be available for Public users.
+
+### Managing Batches
+
+* Once images are uploaded, they are in the Unassigned column.
+
+* You can assign the batch for someone to annotate, sending it to the Annotating column.  
+   * You can assign a portion, in which case the excess is put into a new batch in Unassigned
+
+* Once they are annotated, they are sent to Review (for users with Review Mode available) or to the Dataset column.
+
+* If batches are in the Review column, some or all are either approved or rejected. Approved batches will go into the Dataset column. Rejected batches are sent back to the Annotating column
+
+### Deleting a Batch
+
+Keep in mind that deletions are permanent and irreversible. Please make sure you are confident deleting the project.
+
+You can delete batches by clicking on the three dots next to the batch name and clicking "Delete Batch".
+
+![](/images/datasets/image.png)
+
+Deleting a batch has two behaviors depending on where it is in the annotation process.
+
+* **Unassigned column**: When images are in the unassigned column, the batch and the images within that batch will be permanently deleted from the project.
+
+* **Annotating, Review, Dataset columns:** When images are in these columns, the batch will be sent back to the Unassigned column and the images within will have their annotations removed.  
+   * So, if you want to completely remove the batch that are in these columns, you will have to click the "Delete Batch" button twice: Once in the Annotating, Review or Dataset columns, and again in the Unassigned column.  
+   * This is the correct process you should follow if you need to relabel a batch.

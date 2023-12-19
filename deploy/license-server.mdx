@@ -1,0 +1,29 @@
+---
+title: "License Server"
+---
+
+![](/images/deploy/diagram.png)
+
+Use the license server as a proxy for the Roboflow API.
+
+## Using the License Server
+
+If you wish to firewall the Roboflow Inference Server from the Internet, you will need to use the Roboflow License Server which acts as a proxy for the Roboflow API and your models' weights.
+
+On a machine with access to `https://api.roboflow.com` and `https://storage.googleapis.com` (and port `80` open to the Inference Server running in your private network), pull the License Server Docker container:
+
+```
+sudo docker pull roboflow/license-server
+```
+
+And run it:
+
+```
+sudo docker run --net=host roboflow/license-server
+```
+
+Configure your Inference Server to use this License Server by passing its IP in the `LICENSE_SERVER` environment variable:
+
+```
+sudo docker run --net=host --env LICENSE_SERVER=10.0.1.1 roboflow/inference-server:cpu
+```

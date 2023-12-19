@@ -1,0 +1,94 @@
+---
+title: "Web Browser"
+---
+
+For most business applications, the [Hosted API](/deploy/hosted-api/object-detection) is suitable. But for many consumer applications and some enterprise use cases, having a server-hosted model is not workable (for example, if your users are bandwidth constrained or need lower latency than you can achieve using a remote API).
+
+`roboflow.js` is have built a custom layer on top of [Tensorflow.js](https://www.tensorflow.org/js) to enable real-time inference via JavaScript using models trained on Roboflow.
+
+### Learning Resources
+
+#### Try Your Model With a Webcam
+
+Once you have a trained model, you can easily test it using your webcam using the "Try with Webcam" button. 
+
+The webcam demo is a sample app that is available for you to download and tinker with the "Get Code" link. 
+
+You can try out a webcam demo of a [hand-detector model here](https://demo.roboflow.com/egohands-public/9?publishable%5Fkey=rf%5F5w20VzQObTXjJhTjq6kad9ubrm33) (it is trained on the public [EgoHands dataset](https://universe.roboflow.com/brad-dwyer/egohands-public/)).
+
+Demo video of using roboflow.js to build a custom web app.
+
+#### Interactive Replit Environment
+
+We have published a "[Getting Started](https://replit.com/@roboflow/Roboflow-Getting-Started#style.css)" project on Repl.it with an accompanying tutorial showing [how to deploy YOLOv8 models using our Repl.it template](https://blog.roboflow.com/deploy-yolov8-models-to-replit/).
+
+#### GitHub Template
+
+The Roboflow homepage uses `roboflow.js` to power the COCO inference widget. The source code for this project is [available on GitHub](https://github.com/roboflow/homepage-demo). The README contains instructions on how to use the repository template to deploy a model to the web using GitHub Pages.
+
+#### Documentation
+
+If you would like more details regarding specific functions in `roboflow.js`, check out our [documentation page](/deploy/web-browser/documentation-roboflow.js) or click on any mention of a `roboflow.js` method in our guide below to be taken to the respective documentation.
+
+### Installation
+
+To add `roboflow.js` to your project, simply add the script tag referencing our CDN to your page's `<head> `tag.
+
+### Initialization
+
+You can obtain your `publishable_key` from the Roboflow API settings page. You can get it by going into your workspace, going into Settings, in the Roboflow API page, and getting your Publishable API Key.
+
+![](/images/deploy/blur-photo.com_1692076064.jpg)
+
+Your model ID and version number are located in the URL of the dataset version page (where you started training and see your results).
+
+**Note:** your `publishable_key` is used with `roboflow.js`, **not** your API key (which should remain secret).
+
+You can use the [roboflow.auth()](/deploy/web-browser/documentation-roboflow.js#roboflow.auth) and [roboflow.load()](/deploy/web-browser/documentation-roboflow.js#roboflow.load) functions, or chain them like `roboflow.auth().load()` to authenticate and load your model. [roboflow.load()](/deploy/web-browser/documentation-roboflow.js#roboflow.load) returns a Promise that you can use to access a loaded [model](/deploy/web-browser/documentation-roboflow.js#model) object. If you plan to use your model in one place on the page, you can add a `.then()` statement directly after the `.load()` function like this:
+
+```
+roboflow.auth({
+    publishable_key: "<< YOUR PUBLISHABLE KEY >>"
+}).load({
+    model: "<< YOUR MODEL ID >>",
+    version: 1 // <--- your version number }).then(function(model) { model has loaded! });< code></--->
+```
+
+You can also define an async function that returns the model on which you can run inference:
+
+```
+async function getModel() {
+    var model = await roboflow
+    .auth({
+        publishable_key: API_KEY,
+    })
+    .load({
+        model: MODEL_NAME,
+        version: MODEL_VERSION,
+    });
+
+    return model;
+}
+
+var initialized_model = getModel();
+
+initialized_model.then(function (model) {
+    /// use model.detect() to make a prediction (see "Getting Predictions" below)
+});
+```
+
+This code lets you initialize your model in one place for use throughout your code.
+
+### Configuration
+
+If you would like to customize and configure the way `roboflow.js` filters its predictions, there is a [model.configure()](/deploy/web-browser/documentation-roboflow.js#model.configure) method you can use to tune.
+
+### Getting Predictions
+
+To get predictions back from your model object, use the [model.detect()](/deploy/web-browser/documentation-roboflow.js#model.detect) method. It takes an input image (which can be any `<img>`, `<canvas>`, or `<video>` element). It returns a promise that resolves with an array of predictions.
+
+```
+model.detect(video).then(function(predictions) {
+    console.log("Predictions:", predictions);
+});
+```

@@ -1,0 +1,36 @@
+---
+title: "CPU"
+---
+
+The inference API is available as a Docker container for 64-bit Intel and AMD machines, it is not compatible with macOS based devices.
+
+## x86 CPU Installation
+
+To install the Roboflow Inference Server on an x86 CPU, run the following command:
+
+```
+docker run -it --rm -p 9001:9001 roboflow/roboflow-inference-server-cpu
+```
+
+_If required, run the command with sudo privileges._
+
+## ARM CPU
+
+Accelerate your inference on ARMv8 CPU architectures. This method is also confirmed to work with edge devices such as the [Raspberry Pi](/deploy/raspberry-pi).
+
+```
+docker run -it --rm -p 9001:9001 roboflow/roboflow-inference-server-arm-cpu:0.4.4
+```
+
+_If required, run the command with sudo privileges._
+
+## Use the Inference Server
+
+You can use the Inference Server as a drop-in replacement for our [Hosted Inference API](/deploy/hosted-api/object-detection) (see those docs for example code snippets in several programming languages). Use the sample code from the Hosted API but replace `https://detect.roboflow.com` with `http://{INFERENCE-SERVER-IP}:9001` in the API call. For example,
+
+```
+base64 YOUR_IMAGE.jpg | curl -d @- \
+"http://localhost:9001/your-model/version-number?api_key=YOUR_KEY"
+```
+
+_**Note:**_ _The first call to a model will take a few seconds to download your weights and initialize them; subsequent predictions will run faster._

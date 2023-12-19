@@ -1,0 +1,35 @@
+---
+title: "Manage Classes"
+---
+
+You can view, modify, and manage your annotation classes from within the project settings. These changes impact all images in your project (unlike some of our [preprocessing steps](https://docs.roboflow.com/datasets/image-preprocessing#modify-classes), which only impact a version). As a result, these actions are best taken when you are certain you want to make changes to all of your images.
+
+## How to access Project Settings
+
+You can access Project Settings by clicking the 3-dot button to the right of your project name.
+
+![](/images/datasets/CleanShot%202023-10-25%20at%2011.54.38.png)
+
+Access Project Settings by clicking the 3-dot button.
+
+## Remapping Classes
+
+Clicking on the `Manage Classes` button in the Project settings to see the class remapping options available.
+
+From this menu, you can:
+
+* Rename a class (by typing the new name in the `Override` column).
+
+* Merge classes (by overriding multiple classes to the same name).
+
+* Delete a class (by clicking the `Delete` checkbox).
+
+WARNING: these actions are non-reversible and potentially destructive. Ensure you are comfortable with a change before proceeding.
+
+![](/images/datasets/CleanShot%202023-10-25%20at%2012.24.41.png)
+
+Menu to remap, delete, or merge annotation classes.
+
+## Locking Classes
+
+You can check the `Lock Annotation Classes` checkbox to prevent the creation of new classes. This is useful for ensuring annotators do not accidentally add new classes during the labeling process.

@@ -1,0 +1,38 @@
+---
+title: "Workspace and Project IDs"
+---
+
+To run inference on your model, or to query the Roboflow API endpoints associated with your project, you will need three pieces of information:
+
+1. 1.  
+Your project ID (AKA model ID, or project URL);
+
+2. 2.  
+Your model version number and;
+
+3. 3.  
+Your API key.
+
+### How to Retrieve a Project ID and Version Number
+
+To retrieve your project ID, go to the Version page associated with your trained model in the Roboflow dashboard.
+
+At the top of the page, you will see a box that shows the project ID, the version number, and statistics about how the model performs:
+
+![](/images/api-reference/Screenshot%202023-03-16%20at%2012.00.11.png)
+
+The model ID is the text that appears before the forward slash character. The model version number is the number that appears after the forward slash.
+
+You can also find this information by copying the URL of your model, which will something like this on the Versions page:
+
+```
+https://app.roboflow.com/roboflow-universe-projects/license-plate-recognition-rxg4e/3
+```
+
+In this case:
+
+1. 1.  
+`license-plate-recognition-rxg4e` is the project ID and;
+
+2. 2.  
+3 is the version number.

@@ -1,0 +1,20 @@
+---
+title: "Deployment Requirements"
+---
+
+For all deployment methods, you will need to retrieve the following pieces of information about your model:
+
+1. 1.  
+Roboflow [Workspace ID](/workspaces/roboflow-workspaces#workspace-id) for the project (optional)
+
+2. 2.  
+Roboflow `Project ID` for the project
+
+3. 3.  
+The [Model ID (i.e Version Number](/datasets/create-a-dataset-version#version-number)) of the Roboflow Train model, or hosted model from custom weights upload.
+
+4. 4.  
+Your Roboflow Private API Key (required if you authorize your workspace credentials in your code with `rf.Roboflow("PRIVATE_API_KEY")` instead of `roboflow.login()` or `roboflow.login(force=True)`
+
+5. 5.  
+Usage of a computer/laptop/server architecture or edge device that is compatible with the Inference Server. See each deployment option in the Deploy sidebar for compatibility information for the deployment method you want to use.

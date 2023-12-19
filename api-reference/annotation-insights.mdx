@@ -1,0 +1,64 @@
+---
+title: "Annotation Insights"
+---
+
+Roboflow provides statistics on annotations associated with your workspace and projects. You can view annotation insights in the Roboflow dashboard and through the REST API.
+
+On August 1st, 2023, we improved how annotation metrics are tracked. The Annotation Insights v2 endpoint provides annotation data from August 1st, 2023 and later.
+
+REST API
+
+To retrieve annotation insights for a workspace, make a GET request to the following endpoint:
+
+```
+https://api.roboflow.com/${WORKSPACE}/stats
+```
+
+This endpoint accepts the following URL parameters:
+
+* `api_key`: API key for the workspace from which to retrieve statistics.
+
+* `startDate`: Retrieve statistics starting from this date. Accepts a date in YYYY-MM-DD format: `2023-08-01`
+
+* `endDate`: Retrieve statistics ending from this date. Accepts a date in YYYY-MM-DD format: `2023-08-15`.
+
+* `projectId`: Retrieve data only for the specified project.
+
+* `userId`: Retrieve data only for the specified user.
+
+This endpoint returns a payload with the following structure:
+
+```
+{
+    "data": [
+        {
+            "approved": 73,
+            "boxesDrawn": 127,
+            "imagesLabeled": 73,
+            "projectId": "projectId123",
+            "projectName": "My CV Project",
+            "markedNull": 8,
+            "modelAssisted": 1,
+            "rejected": 0,
+            "labelerId": "labelerId123",
+            "workspaceId": "workspaceId123",
+            "approvalRate": 100
+        }
+    ],
+    "labelers": [
+        {
+            "displayName": "Lenny",
+            "email": "lenny@roboflow.foo",
+            "id": "labelerId123"
+        }
+    ],
+    "stats": {
+        "numImagesLabeled": 73,
+        "numBoxesDrawn": 127,
+        "numImagesMarkedNull": 8,
+        "totalImagesUsingModelAssist": 1,
+        "approvalRate": 100
+    }
+}
+```
+

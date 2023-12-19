@@ -1,0 +1,37 @@
+---
+title: "View Training Results"
+---
+
+## During Training
+
+After you start training a model, a message will appear on the dataset version page associated with the model you are training. This message will first say that a training machine is starting.
+
+When training begins, a training graph will appear that shows changes in [mAP](https://blog.roboflow.com/mean-average-precision/) during training over each epoch.
+
+## After Training
+
+When your model has finished training, you can view metrics from the training process.
+
+Object detection projects report on the precision, recall, and mAP associated with each training job in the Versions tab of your project.
+
+Classification projects report on accuracy compared to a validation dataset, with a confusion matrix showing performance of the project.
+
+Segmentation models show mAP score.
+
+Click on "Details" next to the precision, recall, and mAP statistics on a project Version to see more granular information.
+
+![](/images/train/image.png)
+
+Model Training Results: Roboflow Train
+
+The "Details" tab shows a range of graphs showing performance of your training job. This information is useful if you want to dive deeper into your model performance.
+
+## Interactively Test Model Performance
+
+See how your model performs on images from your dataset and local and hosted image and video files with the [Deploy Tab](https://blog.roboflow.com/deploy-tab/).
+
+![](/images/train/image.png)
+
+The Roboflow Deploy tab
+
+You can also see how your model performed on the specific images in your test and validation sets by using the "Visualize" feature to get a subjective feel for what these training metrics mean for your particular dataset.

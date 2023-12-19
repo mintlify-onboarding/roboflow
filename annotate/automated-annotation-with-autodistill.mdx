@@ -1,0 +1,71 @@
+---
+title: "Automated Annotation with Autodistill"
+---
+
+Autodistill is a framework that lets you use large foundation vision models (i.e. Grounding DINO) to automatically label images.
+
+You can use Autodistill to label a batch of images uploaded to Roboflow.
+
+Autodistill will try to use the following models to identify the objects you specify:
+
+* Grounding DINO (Object detection)
+
+* Grounded SAM (Segmentation)
+
+### When to Use Autodistill
+
+You should use Autodistill if you need to annotate common objects such as vehicles (i.e. forklifts), people, generic defects (i.e. cracks), and generic products (i.e. vinyl records, bread). 
+
+You should not use Autodistill if you need to identify specific variants of an object. For example, Autodistill cannot distinguish between different types of crack, or identify unique defects in electronics.
+
+### Label Data with Autodistill
+
+The Roboflow platform lets you preview how Autodistill will perform on labeling classes of data in your dataset. Then, Roboflow will share a code snippet that you can use to auto-label images on your own hardware. You can upload your labeled dataset back to Roboflow for quality assurance (recommended) and to train a model.
+
+#### Step #1: Upload Data
+
+First, upload data to Roboflow. See our [Upload Data](/datasets/adding-data) instructions for more information.
+
+#### Step #2: Navigate to Uploaded Images
+
+Then, click "Annotate" in the Roboflow sidebar to see the images you have uploaded.
+
+![](/images/annotate/Screenshot%202023-12-19%20at%2013.42.08.png)
+
+Select the "Annotate" option to see the images you have uploaded.
+
+Click on the batch that shows the images you uploaded:
+
+![](/images/annotate/Screenshot%202023-12-19%20at%2013.43.01.png)
+
+Then, click "Auto Label Images":
+
+![](/images/annotate/Screenshot%202023-12-19%20at%2013.43.29.png)
+
+#### Step #3: Configure Autodistill
+
+The Autodistill labeling interface will appear:
+
+![](/images/annotate/Screenshot%202023-12-19%20at%2013.44.11.png)
+
+The images in the batch will appear on the left. You should select up to five images to label.
+
+After selecting images, you need to set an ontology. An ontology lets you define the prompts that will be used by Autodistill to detect objects. You can map these prompts to a class name which will be used to save labels to your dataset.
+
+You can ask Autodistill to label as many objects as you want.
+
+Once you have configured Autodistill, click "Test".
+
+#### Step #4: Evaluate Autodistill Labels
+
+Here are the results from Autodistill when prompted with the prompt "forklift" on an example image:
+
+![](/images/annotate/Screenshot%202023-12-19%20at%2013.47.22.png)
+
+If Autodistill labels your images as you expect, click "Get Code". A code snippet will appear that you can use to auto-label images on your hardware and upload the labeled data to Roboflow.
+
+If Autodistill doesn't label images as expected, try a different prompt. Otherwise, Autodistill may not presently be able to help label your dataset.
+
+### See Also
+
+* [Autodistill documentation](https://docs.autodistill.com/)

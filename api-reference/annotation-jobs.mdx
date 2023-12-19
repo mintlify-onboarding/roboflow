@@ -1,0 +1,151 @@
+---
+title: "Annotation Jobs"
+---
+
+You can use the jobs endpoint to get info about your annotation jobs, their current status or assign images for labeling by creating a new Annotation Job with images from one of your batches.
+
+### Retrieve Annotation Job Data from the API
+
+REST API
+
+To retrieve annotation job data from the REST API, make a request to the following endpoint:
+
+```
+curl https://api.roboflow.com/${WORKSPACE}/${PROJECT}/jobs?api_key=${ROBOFLOW_API_KEY}
+```
+
+This will return data in the following format:
+
+
+```
+{
+    "jobs": [
+        {
+            "owner": "holeSv3hwbzrOv37vH5b",
+            "approved": 0,
+            "createdBy": "g12lCVib0pgurZ6EqWLnApJJ4gr1",
+            "sourceBatch": "PBDhem3YRI1rKtQZSqRK/6VN0fFQIWU1E24bDjGsN",
+            "annotated": 3,
+            "rejected": 0,
+            "labeler": "thomas@roboflow.com",
+            "numImages": 26,
+            "status": "assigned",
+            "instructionsText": "",
+            "name": "Uploaded on 11/22/22 at 1:39 pm: Job 9",
+            "reviewer": "thomas@roboflow.com",
+            "created": {
+                "_seconds": 1669148088,
+                "_nanoseconds": 297000000
+            },
+            "project": "PBDhem3YRI1rKtQZSqRK",
+            "unannotated": 23,
+            "id": "5LfYNJg10Z9Kvx5Tt5Uq"
+        },
+
+        {
+            "approved": 0,
+            "unannotated": 2,
+            "instructionsText": "Please label all the racoons in the images using polygons",
+            "annotated": 12,
+            "sourceBatch": "PBDhem3YRI1rKtQZSqRK/6VN0fFQIWU1E24bDjGsN",
+            "project": "PBDhem3YRI1rKtQZSqRK",
+            "rejected": 0,
+            "owner": "holeSv3hwbzrOv37vH5b",
+            "createdBy": "API",
+            "status": "assigned",
+            "created": {
+                "_seconds": 1669148192,
+                "_nanoseconds": 651000000
+            },
+            "labeler": "korryn@roboflow.com",
+            "name": "Test Job",
+            "numImages": 25,
+            "reviewer": "thomas@roboflow.com",
+            "id": "h2E42jt686yLyMIxxqOQ"
+        }
+    ]
+}
+```
+
+To retrieve information about a specific job, specify the job ID:
+
+```
+curl https://api.roboflow.com/${WORKSPACE}/${PROJECT}/jobs/${JOB_ID}?api_key=${ROBOFLOW_API_KEY}
+```
+
+Here is the response format from this request:
+
+```
+{
+    "approved": 0,
+    "unannotated": 2,
+    "instructionsText": "Please label all the racoons in the images using polygons",
+    "annotated": 12,
+    "sourceBatch": "PBDhem3YRI1rKtQZSqRK/6VN0fFQIWU1E24bDjGsN",
+    "project": "PBDhem3YRI1rKtQZSqRK",
+    "rejected": 0,
+    "owner": "holeSv3hwbzrOv37vH5b",
+    "createdBy": "API",
+    "status": "assigned",
+    "created": {
+        "_seconds": 1669148192,
+        "_nanoseconds": 651000000
+    },
+    "labeler": "korryn@roboflow.com",
+    "name": "Test Job",
+    "numImages": 25,
+    "reviewer": "thomas@roboflow.com",
+    "id": ""
+}
+```
+
+### Create a New Annotation Job
+
+REST API
+
+You can make a POST request to the /jobs endpoint of your project to create a new Annotation Job in your project. To create a new job the you need to provide some JSON encoded data in the body of your POST request.
+
+_**You need to set both reviewer and labeler to an email that belong to a user in your workspace.**_
+
+_If your workspace does not have the advanced Review Mode feature enabled, you won't see the reviewer in the app UI (but you still need to set one as part of the API request; in the web UI this automatically gets set to the user creating the job in the UI. You can pass any user that is an admin member of the workspace as a reviewer)_
+
+To create a new Annotation Job in a project, that assigns 10 images from one of the batches in the project to be annotated by lenny@roboflow.com you can make a POST request like this:
+
+```
+curl --location --request POST 'https://api.roboflow.com/${WORKSPACE}/${PROJECT}/jobs?api_key=${ROBOFLOW_API_KEY}' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Job created by API",
+    "batch": "",
+    "num_images": 10,
+    "labelerEmail": "lenny@roboflow.com",
+    "reviewerEmail": "lenny@roboflow.com"
+}'
+```
+
+This request returns the following data:
+
+```
+{
+    "created": {
+        "_seconds": 1669234345,
+        "_nanoseconds": 61000000
+    },
+    "rejected": 0,
+    "annotated": 0,
+    "numImages": 2,
+    "createdBy": "API",
+    "owner": "holeSv3hwbzrOv37vH5b",
+    "instructionsText": "No instructions provided",
+    "unannotated": 2,
+    "reviewer": "thomas@roboflow.com",
+    "labeler": "korryn@roboflow.com",
+    "name": "API Job 1",
+    "project": "PBDhem3YRI1rKtQZSqRK",
+    "approved": 0,
+    "status": "assigned",
+    "sourceBatch": "PBDhem3YRI1rKtQZSqRK/6VN0fFQIWU1E24bDjGsN",
+    "id": "0IzntY4ms4ogwHwJNkIB"
+}
+```
+

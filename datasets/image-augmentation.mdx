@@ -1,0 +1,134 @@
+---
+title: "Create Augmented Images"
+---
+
+Image augmentation is a step where augmentations are applied to existing images in your dataset. This process can help improve the ability of your model to generalize and thus perform more effectively on unseen images.
+
+Roboflow supports the following augmentations:
+
+* Flip
+
+* 90 degree rotation
+
+* Random rotation
+
+* Random crop
+
+* Random shear
+
+* Blur
+
+* Exposure
+
+* Random noise
+
+* Cutout (paid plans only)
+
+* Mosaic (paid plans only)
+
+We recommend starting a project with no augmentations. This allows you to evaluate the quality of your raw dataset. If you add augmentations and your dataset doesn't perform as well as expected, you will not have a baseline to which you can compare model performance.
+
+If your doesn't perform well without augmentations, you may need to investigate class balance, data representation, and dataset size. When you have a dataset on which you have successfully trained a model without augmentations, you can add augmentations to further help improve model performance.
+
+### Creating Augmented Images prior to Training
+
+Doing your augmentations through in a version ("offline augmentation") rather than at the time of training has a few key benefits.
+
+1. 1.  
+**Model reproducibility is increased**. With Roboflow, you have a copy of how each image was augmented. For example, may find your model performs better on bright images rather than dark images, so you should collect more low-light training data.
+
+2. 2.  
+**Training time is decreased**. Augmentations are CPU-constrained operations. When you’re training on your GPU and conducting augmentations on-the-fly, your GPU is often waiting for your CPU to provide augmented data at each epoch. That adds up!
+
+3. 3.  
+**Training costs are decreased**. Because augmentations are CPU-constrained operations, your expensive, rented GPU is often waiting to be fed images for training.
+
+### Add Augmentations
+
+To add augmentations, go to the Versions tab associated with your project in the Roboflow dashboard. Then, click "Augmentations" to set up augmentations for your project.
+
+![](/images/datasets/Screenshot%202023-06-22%20at%2012.44.13.png)
+
+You can select how many times you seek a given image to be augmented. For example, sliding to 3 means each of your images will receive 2 random augmentations based on the settings you select.
+
+Example case: 3x augmentation --> 1 of the created images is created only with the [preprocessing settings](/datasets/image-preprocessing) you have applied. The other 2 images receive augmentations, leaving you with 3 times the number of images for each source image.
+
+## How Augmentations Are Applied
+
+Augmentations are chained together, with randomization for the augmentation settings, and values for each setting, applied to each augmented image. Any images that appear as duplicates during this process are filtered out of the created version.
+
+For example, if you select “flip horizontally” and “salt and pepper noise,” a given image will randomly be reflected as a horizontal flip and receive random salt and pepper noise.
+
+## Augmentation Options
+
+Below are the augmentations supported by Roboflow. The parameters you can customize are in bullet points.
+
+### Flip
+
+Randomly flip (reflect) an image vertically or horizontally. Annotations are correctly mirrored.
+
+* Horizontal: Flip the image’s [NumPy array](https://numpy.org/) in the left/right direction.
+
+* Vertical: Flip the image’s [NumPy array](https://numpy.org/) in the up/down direction.
+
+### 90 Degree Rotations
+
+Randomly rotate an image 90 degrees or 180 degrees.
+
+* Clockwise: Rotates an image 90 degrees clockwise.
+
+* Counter Clockwise: Rotates an image 90 degrees counter clockwise.
+
+* Upside Down: Rotates an image 180 degrees (upside down).
+
+### Random Rotation
+
+Randomly rotate an image clockwise or counter clockwise up to the degree amount the user selects. [Learn when this is recommended](https://blog.roboflow.com/why-and-how-to-implement-random-rotate-data-augmentation/).
+
+* Degrees: Select the highest amount an image will be randomly rotated clockwise or counter clockwise.
+
+### Random Crop
+
+Randomly create a subset of an image. [This can be used to improve your model's generalizability](https://blog.roboflow.com/why-and-how-to-implement-random-crop-data-augmentation/)!
+
+* Percent: The percent area of the original image **to drop**. (e.g. The percentage area of the original image to keep. (e.g. a higher percentage contains a smaller amount of the original image.)
+
+_Note: annotations are affected. At present, our implementation drops any annotations that are completely out of frame. We crop any annotation that are partially out of frame to be in line with the edge of the image. For these kept annotations, we currently keep any amount of the original object detection area. We will soon provide the ability for you to select what percentage of annotation area you seek to maintain -- for example, imagine you only want to keep annotations that have at least 80% of the area of their original bounding box -- that will be supported._
+
+### Random Shear
+
+Randomly distort an image across its horizontal or vertical axis. [Why does this matter](https://blog.roboflow.com/shear-augmentation/)?
+
+* Horizontal: Select the highest amount an image will be randomly sheared across its x-axis.
+
+* Vertical: Select the highest amount an image will be randomly sheared across its y-axis.
+
+### Exposure
+
+Adjust the gamma exposure of an image to be brighter or darker.
+
+* Percent: Select the percent up to which an image will be randomly brightened or darkened. Up to 100 percent bright (completely white) or 100 percent dark (completely black).
+
+### Blur
+
+Introduces Gaussian blur to an image. [We walk through the details of Gaussian blur here](https://blog.roboflow.com/using-blur-in-computer-vision-preprocessing/).
+
+* Pixels: Determines the amount of blur applied to an image (i.e. the kernel size of the blurring process; all kernel sizes are odd). 25 pixels is max blur.
+
+### Random Noise
+
+Injects random salt and pepper noise to an image. [You can find details here](https://blog.roboflow.com/why-to-add-noise-to-images-for-machine-learning/).
+
+* Percent: Selects the percent of an image’s pixels that are affected, up to 25 percent.
+
+## Bounding Box Augmentation
+
+Bounding box level augmentation creates new training data by only altering the content of a source image’s bounding boxes. In doing so, developers have greater control over creating training data that is more suitable to their problem’s conditions.
+
+* A [2019 paper](https://arxiv.org/pdf/1906.11172.pdf) from Google researchers introduces the idea of using bounding box only augmentation to create optimal data for their models. In this paper, researchers showed bounding box only modifications create systemic improvements, especially for models that were fit on small datasets.
+
+See our blog post on [how bounding box augmentation improves computer vision model fit](https://blog.roboflow.com/introducing-bounding-box-level-augmentations/) for more.
+
+## See Also
+
+* [How do image flip augmentations work?](https://blog.roboflow.com/how-flip-augmentation-improves-model-performance/)

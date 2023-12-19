@@ -1,0 +1,331 @@
+---
+title: "NVIDIA GPU"
+---
+
+## Task Support
+
+The following task types are supported by the hosted API:
+
+| Task Type             | Supported by NVIDIA GPU                          |
+| --------------------- | ------------------------------------------------ |
+| Object Detection      | [✅](https://emojipedia.org/check-mark-button/) |
+| Classification        | [✅](https://emojipedia.org/check-mark-button/) |
+| Instance Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+| Semantic Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+
+## Installation Requirements
+
+To deploy theGPU inference server, you must first install NVIDIA drivers and [nvidia-container-runtime](https://github.com/NVIDIA/nvidia-container-runtime), allowing docker to passthrough your GPU to the inference server. You can test to see if your system already has `nvidia-container-runtime` and if your installation was successful with the following command:
+
+```
+docker run --gpus all -it ubuntu nvidia-smi
+```
+
+If your installation was successful, you will see your GPU device from within the container:
+
+```
+Tue Nov  9 16:04:47 2021       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 460.91.03    Driver Version: 460.91.03    CUDA Version: N/A      |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla K80           Off  | 00000000:00:1E.0 Off |                    0 |
+| N/A   41C    P0    56W / 149W |    504MiB / 11441MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
++-----------------------------------------------------------------------------+
+```
+
+The last thing you need before building your GPU container is your project information. This includes your Roboflow API Key, Model ID and Model Version. If you don't have this information you can follow this link to Locate Your Project Information. Once located, save those three variables for later.
+
+### Amazon EC2 Deployments
+
+#### Select AMI and Launch EC2 Instance 
+
+To run the GPU container on an EC2 instance, you first need to select the proper AMI. The AMI can be configured when you are launching your instance and should be selected before you launch the instance. We are going to be using the **NVIDIA GPU-Optimized AMI** which comes with Ubuntu 20.04, Docker and other requirements pre-installed.
+
+![](/images/deploy/AMI.jpg)
+
+Configure EC2 Instance with NVIDIA GPU-Optimized AMI
+
+#### Login to EC2 Instance via SSH
+
+With your EC2 instance successfully running, we can log into it using SSH and our Amazon Keypair. Amazon provides the documentation for connecting to their instances [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html). If you have your Keypair ready and know your EC2 instance's Public DNS, we can use the command below to log into the instance. The default `instance-user-name` for this instance should be _ubuntu._
+
+```
+ssh -i /path/key-pair-name.pem instance-user-name@instance-public-dns-name
+```
+
+#### Start GPU Docker Container 
+
+Once you are logged into the EC2 instance via SSH. We can start the Docker container with the following command:
+
+```
+sudo docker run --gpus all -p 9001:9001 --network="host" roboflow/roboflow-inference-server-gpu
+```
+
+#### Compile Engine and Run Inference
+
+Run inference on your model by posting a base64 encoded image to the server:
+
+```
+base64 your_img.jpg | curl -d @- "http://0.0.0.0:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+```
+
+### Anaconda Deployments
+
+#### Set-up Your Anaconda Environment
+
+To run the GPU container on [Anaconda](https://www.anaconda.com/) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html), we need to create our conda environment and install Docker. To create our environment we can use the commands below inside of the Anaconda terminal.
+
+```
+conda create -n GPU python=3.8
+conda activate GPU
+pip install pybase64
+```
+
+#### Install Docker in Anaconda Environment
+
+You can download and run docker via [Docker Desktop](https://www.docker.com/products/docker-desktop/) or you can install Docker via `conda-forge`. The code below will install Docker using Anaconda's recipe manager.
+
+```
+conda install -c conda-forge docker
+```
+
+#### Run Docker Container Inside of Anaconda Environment
+
+If you have installed Docker Desktop, make sure to have it running in order to access the container. Those of you that did not download Docker Desktop should be able to access the daemon version of Docker via our previous `conda-forge` install process. 
+
+Once your Anaconda environment can successfully access Docker. We can start the Docker container with the following command:
+
+```
+docker run --gpus all -p 9001:9001 roboflow/roboflow-inference-server-gpu
+```
+
+#### Compile Engine and Run Inference
+
+Open up another Anaconda terminal and navigate to a directory that contains data you want to run inference on. Run inference on your model by posting a base64 encoded image to the server:
+
+```
+pybase64 encode your_img.jpg | curl -d @- "http://localhost:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+```
+
+### Multi-GPU Support with Docker Compose
+
+We have developed a repository for quickly accessing examples on how to use the Roboflow GPU Docker container. To get started, run the git clone command below to download our docker compose template.
+
+```
+git clone https://github.com/roboflow/trt-demos.git
+```
+
+For this example, we have configured the docker to run 8 GPUs with a load balancer. If you need to run less than 8 GPUs. We will cover that [here](/deploy/enterprise-gpu#configuring-docker-compose.yaml-and-roboflow-nginx.conf).
+
+#### Building the Load Balancer
+
+To build the load balancer docker container use the command below. If you want more information on the load balancer we are using you can find that information [here](http://nginx.org/en/docs/).
+
+```
+docker build . -t lb
+```
+
+#### Spinning up Docker Compose
+
+Make sure that the names of the services in the docker-compose.yaml file are correctly reflected in the .conf/roboflow-nginx.conf file then run docker compose.
+
+```
+docker-compose up
+```
+
+Your Docker should now be spinning up multiple GPU containers that all share a volume and a port with the load balancer. This way the load balancer can manage the throughput of each container for optimal speed. If you are running in Docker Desktop, a successful boot up should look something like this.
+
+![](/images/deploy/image.png)
+
+#### Running Inference 
+
+Now that you have your GPU containers and the load balancer running. You are able to interact with the load balancer which will route all of your request to the respective GPU in order to maintain optimal throughput. 
+
+You can test the load balancer by opening up a new terminal and using one of the curl commands below.
+
+```
+# Amazon EC2 Deployments
+base64 your_img.jpg | curl -d @- "http://0.0.0.0:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+
+# Anaconda Deployments
+pip install pybase64 
+pybase64 encode your_img.jpg | curl -d @- "http://localhost:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+
+# Windows Subsystem Linux
+base64 your_img.jpg | curl -d @- "http://0.0.0.0:9001/[YOUR MODEL]/[YOUR VERSION]?api_key=[YOUR API KEY]"
+```
+
+#### Configuring your Docker Compose Files
+
+To run less than the default 8 GPUs you will need to make some changes to a couple of the files in this repo. The first we will look at is the docker-compose.yaml which has a bunch of services such as Roboflow-GPU-1, Roboflow-GPU-2, etc. These services are what run the docker containers and attach to each GPU.
+
+If we want to run only 3 GPUs, then we can delete all of the other services except for Roboflow-GPU-1, Roboflow-GPU-2 and Roboflow-GPU-3\. To delete a service remove the line containing the service name and all the lines below it until the next service name. For the 3 GPU example, we can delete lines 39-99.
+
+docker-compose.yaml
+
+```
+version: "3"
+services:  
+  Roboflow-GPU-1:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+  Roboflow-GPU-2:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['1']
+            capabilities: [gpu]
+  Roboflow-GPU-3:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['2']
+            capabilities: [gpu]
+  Roboflow-GPU-4:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['3']
+            capabilities: [gpu]
+  Roboflow-GPU-5:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['4']
+            capabilities: [gpu]
+  Roboflow-GPU-6:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['5']
+            capabilities: [gpu]
+  Roboflow-GPU-7:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['6']
+            capabilities: [gpu]
+  Roboflow-GPU-8:
+    image: roboflow/roboflow-inference-server-gpu
+    restart: always
+    volumes:
+      - shared-volume:/cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['7']
+            capabilities: [gpu]
+            
+```
+
+The next file we need to edit would be the roboflow-nginx.conf which is found inside of the conf folder.
+
+Continuing our example of going from 8 to 3 GPUs. We will need to remove some of the server lines of code in the upstream myapp1\. Specifically line 17 through line 21 aren't necessary anymore because that would exceed our target number.
+
+roboflow-nginx.conf
+
+```
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    upstream myapp1 {
+        server Roboflow-GPU-1:9001;
+        server Roboflow-GPU-2:9001;
+        server Roboflow-GPU-3:9001;
+        server Roboflow-GPU-4:9001;
+        server Roboflow-GPU-5:9001;
+        server Roboflow-GPU-6:9001;
+        server Roboflow-GPU-7:9001;
+        server Roboflow-GPU-8:9001;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://myapp1;
+        }
+    }
+}
+```
+
+After you have changed these two files, you should be able to continue with the docker-compose tutorial by [building the load balancer](/deploy/enterprise-gpu#building-the-load-balancer).
+
+### Using Multi-Stream with the GPU Container
+
+In some cases, you may have multiple camera streams that you want to process in parallel on the same GPU Container on the same GPU. To spin up multiple model services on in your GPU container specify the `--env NUM_WORKERS=[desired num_workers]`On NVIDIA V100, we found that 2-4 workers provided optimal latency.
+
+![](/images/deploy/image%20(14).png)
+
+Benchmark statistics for TRT multi-stream on Roboflow Accurate model on NVIDIA V100
+
+### Exposing GPU Device ID in the GPU Container
+
+In certain cases, you may want your GPU container to run on a specific GPU or vGPU. You can do so by specifying `CUDA_VISIBLE_DEVICES=[DESIRED GPU OR MIG ID]` 

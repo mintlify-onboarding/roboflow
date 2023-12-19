@@ -1,0 +1,43 @@
+---
+title: "Authentication"
+---
+
+To authenticate with the Roboflow API, you need an API key. You can obtain an API key using our web application or via our token issuance flow, supported by the CLI and Python package.
+
+## Recommended Authentication Flows
+
+### In a Production Application
+
+If you are using Roboflow in a production application (i.e. scripts, a web application, an API), we recommend using your API key to authenticate with Roboflow.
+
+### In a Notebook
+
+If you are using our Python SDK in a notebook, we recommend authenticating using the Token Issuance flow documented below.
+
+## Retrieve an API Key
+
+You can retrieve an API key from your Roboflow settings.
+
+First, go to the [Roboflow dashboard](https://app.roboflow.com). Then, select the "Roboflow API" tab from the Settings dropdown.
+
+![](/images/api-reference/image.png)
+
+In your workspace, you should see a settings button with a dropdown.
+
+Finally, copy your Private API Key. Be sure to keep this secret. Treat it like a password; it grants the bearer access to all of your workspace's data and models.
+
+![](/images/api-reference/image.png)
+
+Copy your API Key.
+
+If you ever accidentally expose your key to someone who isn't authorized to access your workspace, click "Revoke API Key". Your API key will be disabled immediately. You can then issue a new one.
+
+## Token Issuance Flow
+
+The Roboflow CLI and Python package support token issuance, a convenient way to grant an API key. When you authenticate with `roboflow.login()` in Python, or `roboflow auth` in the CLI, you will be given a URL to a page through which you can issue a token to access a workspace.
+
+You will be asked to select a workspace, then given a token for use in the Python package or CLI.
+
+![](/images/api-reference/Screenshot%202023-06-22%20at%2008.47.31.png)
+
+Retrieving a token via the token issuance flow.

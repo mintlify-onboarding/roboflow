@@ -1,0 +1,65 @@
+---
+title: "Video Inference"
+---
+
+The Video Inference API is optimized for async video processing. It supports running any model [Roboflow Inference](https://roboflow.com/inference) implements (including foundation models like CLIP, custom fine-tuned models you [train with Roboflow](https://roboflow.com), and thousands of models shared by others on [Roboflow Universe](https://universe.roboflow.com)) to get predictions on all or a subset of the frames in a recorded video.
+
+Here are the steps you must follow to use the API and retrieve predictions:
+
+1. 1.  
+Upload a video
+
+2. 2.  
+Request inference on a model or list of models on the uploaded video
+
+3. 3.  
+Poll until results are available
+
+Due to the optimizations to efficiently batch and utilize the GPU and the higher latency tolerance, the Video Inference API can be up to 100x cheaper for stored (vs realtime streaming) video processing than the image-based [Roboflow Hosted Inference API](https://docs.roboflow.com/deploy/hosted-api).
+
+### Model Support
+
+You can use the Video Inference API on the following model types:
+
+| Task Type                                                                                     | Supported by Hosted API |
+| --------------------------------------------------------------------------------------------- | ----------------------- |
+| [Object Detection](https://docs.roboflow.com/deploy/video-inference/use-a-fine-tuned-model) | ✅                       |
+| [CLIP](https://docs.roboflow.com/deploy/video-inference/use-clip)                           | ✅                       |
+| [Gaze Detection](https://docs.roboflow.com/deploy/video-inference/use-gaze-detection)       | ✅                       |
+| Classification                                                                                | ✅                       |
+| Instance Segmentation                                                                         | ✅                       |
+| Semantic Segmentation                                                                         | ✅                       |
+
+### Example Use-Cases
+
+Here are a few example use cases in which you can use the Video Inference API:
+
+* Video tagging
+
+* Video moderation (i.e. searching for violence, explicit scenes in media),
+
+* Finding and tagging brands or products
+
+* Extracting text from a video
+
+* Scene splitting and categorization
+
+* Object counting
+
+* Media search indexing
+
+* Identifying areas in which contextual ads can be placed in a video
+
+* And more.
+
+### Important Notes
+
+1. 1.  
+Video inference currently supports the following video file-extensions: _mp4, MP4, avi, AVI, mkv, MKV, webm, WEBM._
+
+2. 2.  
+Roboflow caches uploaded video for a week to allow users to re-run video inference on the same uploaded video without having to upload the whole video repeatedly. After this 1 week period, the video is permanently deleted.
+
+3. 3.  
+Videos uploaded to Roboflow can never be downloaded. The upload feature is solely to allow the backend to process the video for inference purposes.
+

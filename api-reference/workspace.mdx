@@ -1,0 +1,96 @@
+---
+title: "Workspaces"
+---
+
+Python SDK
+
+REST API
+
+CLI
+
+To retrieve information about a workspace and its projects, use the following Python code:
+
+```
+import roboflow
+
+rf = roboflow.Roboflow(api_key=YOUR_API_KEY_HERE)
+
+# List all projects for your workspace
+workspace = rf.workspace()
+```
+
+The `/:workspace` endpoint gives you information about your workspace and its projects. You can dive in deeper to any project to find information about its generated versions, models, and dataset exports.
+
+```
+$ curl "https://api.roboflow.com/roboflow?api_key=$ROBOFLOW_API_KEY"
+{
+    "workspace": {
+        "name": "Roboflow",
+        "url": "roboflow",
+        "members": 7,
+        "projects": [
+            {
+                "id": "roboflow/chess-sample-4ckfl",
+                "type": "object-detection",
+                "name": "Chess Sample",
+                "created": 1630335544.592,
+                "updated": 1630335741.988,
+                "images": 12,
+                "unannotated": 3,
+                "annotation": "pieces",
+                "versions": 3,
+                "public": false,
+                "splits": {
+                    "train": 9,
+                    "test": 1,
+                    "valid": 2
+                },
+                "classes": {
+                    "white-queen": 7,
+                    "black-queen": 4,
+                    "black-bishop": 8,
+                    "white-knight": 10,
+                    "white-bishop": 11,
+                    "black-knight": 11,
+                    "black-rook": 10,
+                    "white-pawn": 34,
+                    "black-pawn": 37,
+                    "white-rook": 10,
+                    "black-king": 8,
+                    "white-king": 8
+                }
+            }
+        ]
+    }
+}
+```
+
+### Getting Workspace Info
+
+To get info for a workspace in the CLI, use the following command:
+
+```
+roboflow workspace get
+```
+
+[For more details, refer to the relevant section on the CLI docs.](/api-reference/install-cli/roboflow-cli-documentation#roboflow-workspace-get)
+
+### Listing Workspaces
+
+To list workspaces in the CLI, use the following command:
+
+```
+roboflow workspace list
+```
+
+This command will return a response such as:
+
+```
+ James Gallagher
+  link: https://app.roboflow.com/james-gallagher-87fuq
+  id: james-gallagher-87fuq
+```
+
+[For more details, refer to the relevant section on the CLI docs.](/api-reference/install-cli/roboflow-cli-documentation#workspace-list)
+
+

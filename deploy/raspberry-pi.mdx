@@ -1,0 +1,79 @@
+---
+title: "Raspberry Pi"
+---
+
+Prefer to learn using video? Check out our [Raspberry Pi video guide](https://youtu.be/S-Ga%5FuxnRZA).
+
+Our Raspberry Pi deployment option runs directly on your devices in situations where you need to run your model without a reliable Internet connection.
+
+## Task Support
+
+The following task types are supported by the hosted API:
+
+| Task Type             | Supported by Hosted API                          |
+| --------------------- | ------------------------------------------------ |
+| Object Detection      | [✅](https://emojipedia.org/check-mark-button/) |
+| Classification        | [✅](https://emojipedia.org/check-mark-button/) |
+| Instance Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+| Semantic Segmentation | [✅](https://emojipedia.org/check-mark-button/) |
+
+## Deploy a Model to a Raspberry Pi
+
+You will need a Raspberry Pi 4 (or Raspberry Pi 400) [running the 64bit version of Ubuntu](https://ubuntu.com/download/raspberry-pi). To verify that you're running a compatible system, type `arch` into your Raspberry Pi's command line and verify that it outputs `aarch64`.
+
+Then, open the terminal on the Raspberry Pi and install Docker [using the convenience script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script):
+
+```
+ curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh get-docker.sh
+```
+
+## Step 1: Install the Inference Server
+
+The inference API is available as a Docker container optimized and configured for the Raspberry Pi. You can install and run the inference server using the following command:
+
+```
+sudo docker run -it --rm -p 9001:9001 roboflow/roboflow-inference-server-arm-cpu
+```
+
+You can now use your Pi as a drop-in replacement for the [Hosted Inference API](/deploy/hosted-api/object-detection) (see those docs for example code snippets in several programming languages).
+
+## Step 2: Install the Roboflow pip Package
+
+Next, install the Roboflow python package with `pip install roboflow`.
+
+## Step 3: Run Inference
+
+To run inference on your model, run the following code, substituting your API key, workspace and project IDs, project version, and image name as relevant. You can learn how to find your API key in our [API docs](/api-reference) and how to find your [workspace and project ID](/api-reference/workspace-and-project-ids).
+
+```
+from roboflow import Roboflow
+
+rf = Roboflow(api_key="YOUR_PRIVATE_API_KEY")
+project = rf.workspace("YOUR_WORKSPACE").project("YOUR_PROJECT")
+model = project.version(VERSION_NUMBER, local="http://localhost:9001/").model
+
+prediction = model.predict("YOUR_IMAGE.jpg", confidence=40, overlap=30)
+## get predictions on hosted images
+#prediction = model.predict("YOUR_IMAGE.jpg", hosted=True)
+print(prediction.json())
+```
+
+Here is an example result of our inference on a model:
+
+![Inference Result: One Image (Visual Studio Code terminal)](/images/deploy/receive_prediction_single.png)
+
+Inference Result: One Image (Visual Studio Code terminal)
+
+You can also run as a client-server context and send images to the Pi for inference from another machine on your network. Replace `localhost` in the `local=` parameter with the Pi's local IP address.
+
+## Performance Expectations
+
+On we saw about 1.3 frames per second on the Raspberry Pi 400\. These results were obtained using while operating in a client-server context (so there is some minor network latency involved) and a 416x416 model.
+
+If you need faster speeds you might want to try using the [Luxonis OAK AI Cameras](/deploy/luxonis-oak) with your Raspberry Pi to accelerate your models.
+
+
+## See Also
+
+* [Raspberry Pi Video Tutorial](https://youtu.be/S-Ga%5FuxnRZA)

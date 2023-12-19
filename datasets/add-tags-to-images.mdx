@@ -1,0 +1,31 @@
+---
+title: "Add Tags to Images"
+---
+
+Roboflow provides an image tagging feature. This feature allows you to assign tags to images during upload. You can use these tags for batch assignment for labeling, enabling greater precision when assigning images for labeling. Furthermore, you can use image tags as a parameter in the Roboflow dataset search associated with your dataset.
+
+### Assigning a Tag During Upload
+
+You can assign tags during data upload both in the web interface and using the REST API and Python SDK. The image below shows how to specify tags to associate with images uploaded using the web interface:
+
+![Opening the Tag menu prior to image Upload](/images/datasets/Screenshot%202023-03-06%20at%2010.07.32%20AM.png)
+
+Opening the Tag menu prior to image Upload
+
+### Filter Images by Tag
+
+You can filter images using tags in the Assign page on the Roboflow dashboard:
+
+![Filtering by Existing dataset Tags from within the Assign tool](/images/datasets/Screenshot%202023-03-06%20at%2010.04.26%20AM.png)
+
+Filtering by Existing dataset Tags from within the Assign tool
+
+You can also create versions on a subset of images by utilizing the [Filter by Tag](https://docs.roboflow.com/datasets/image-preprocessing#filter-by-tag) preprocessing step. This allows you to exclude (or require) images with specific tags from being used in training. 
+
+### Apply Tags in the Images Tab
+
+To apply tags in the Image tab, click on the images to which you want to apply tags, click the "Images Selected" button in the top right corner of the page, and then click "Apply tags". This will allow you to add an arbitrary number of tags to the selected images.
+
+![](/images/datasets/CleanShot%202023-08-25%20at%2016.06.35%402x.png)
+
+Applying Tags to selected images

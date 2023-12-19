@@ -1,0 +1,69 @@
+---
+title: "Search a Dataset"
+---
+
+You can search for image files in Roboflow by file name, a search query, or using a range of supported folders.
+
+### Search by File Name
+
+Search images by filename. Searches are matched by full strings, or substrings. In the example below, a search for images present in the `train` set is combined with a search for the file `000000074789.jpg`.
+
+![](/images/datasets/image.png)
+
+### Search by Dataset Split
+
+Search images by the dataset split (train, valid, test). Search filters can be stacked with text-based queries. In the example below, the term `horse` is combined with a search for images present in the `valid` set.
+
+![](/images/datasets/image.png)
+
+### Semantic Search
+
+Use text queries to search for images most closely related to your search terms. These queries will return results to help you find images even when common objects are not visible, or currently labeled.
+
+![](/images/datasets/image.png)
+
+Searching for images most closely resembling the query for "red background"
+
+### Search Filters
+
+Here are the filters available:
+
+* `like-image:<SOURCE_ID>`: Sort by semantic similarity measured by CLIP.
+
+* `tag` : Filter by user-provided tags.
+
+* `filename` : Runs a search for file names that match the provided file name. Use \* at the beginning and end of a query to run a partial match.
+
+* `split` : Filters by split (train, test, valid).
+
+* `job:<JOB_ID>` : Shows images with the provided job ID.
+
+* `min-width:X` : Shows images with a width less than X.
+
+* `max-width:X` : Shows images with a width greater than X.
+
+* `min-height:X` : Shows images with a height less than X.
+
+* `max-height:X` : Shows images with a height greater than X.
+
+* `min-annotations:X` : Filters images with more than the specified number of annotations.
+
+* `max-annotations:X` : Shows images with fewer than the specified number of annotations.
+
+* `class:CLASS`: Shows images that have at least 1 annotation with the provided label.
+
+### Boolean Logic
+
+Use AND, OR, NOT, and parentheses to combine multiple filters to form complex queries.
+
+`class:helmet AND NOT (tag:v1 OR tag:v2)`
+
+### Inverted Filters
+
+Add a minus sign before the filter to exclude images matching the filter.
+
+`class:helmet -class:vest`
+
+### Search by API
+
+You can also search your dataset and images on Roboflow via our [Search API](https://docs.roboflow.com/api-reference/images/search#rest-api).

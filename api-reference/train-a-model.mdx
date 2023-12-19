@@ -1,0 +1,35 @@
+---
+title: "Train a Model"
+---
+
+You can start a training job either [in the Roboflow platform](/train/train) or using the Python SDK, using the instructions below.
+
+Python SDK
+
+To schedule a training job via the Python SDK, use the `train()` method. You can train on a version that does not have an associated model, or you can train at the project level. If you train at the project level, a new dataset version will be created then a training job will start.
+
+_Note: this method will finish when the Roboflow platform has started a training job, not when the training job is finished._
+
+```
+import roboflow
+
+rf = roboflow.Roboflow(api_key=YOUR_API_KEY_HERE)
+
+# List all projects for your workspace
+workspace = rf.workspace()
+
+# get a project
+project = rf.workspace().project("PROJECT_ID")
+
+# create a new version and train
+new_version = project.generate_version()
+version = project.version(new_version)
+
+# train on an existing version
+# (the one we created above)
+version.train()
+
+# train on a new version
+project.train()
+
+```

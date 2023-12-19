@@ -1,0 +1,55 @@
+---
+title: "Command Line Interface"
+---
+
+The Roboflow command line interface (CLI) is a tool through which you can manage and interact with projects. You can retrieve information about projects and workspaces, upload images and annotations, and run inferences on images using a model hosted on Roboflow.
+
+The CLI supports a more limited set of actions than the REST API and Python SDK. We recommend using the CLI to upload datasets to Roboflow if you want to do so natively from the command line. 
+
+## Documentation
+
+For more details, examples, and information, take a look at the [Roboflow CLI documentation.](/api-reference/install-cli/roboflow-cli-documentation) Here are links to the documentation for the most used Roboflow CLI commands:
+
+* [roboflow auth](/api-reference/install-cli/roboflow-cli-documentation#roboflow-auth)
+
+* [roboflow download](/api-reference/install-cli/roboflow-cli-documentation#roboflow-download)
+
+* [roboflow infer](/api-reference/install-cli/roboflow-cli-documentation#roboflow-infer)
+
+## Install the Roboflow CLI
+
+_You will need to_ [_install npm_](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) _before you can install the Roboflow CLI._
+
+To install the Roboflow CLI globally on your system, use the following `npm` command:
+
+`npm i -g roboflow-cli`
+
+After that you should have the Roboflow command available to you in your terminal of choice.
+
+![](/images/api-reference/Screen%20Shot%202022-10-13%20at%2010.52.32%20AM.png)
+
+Roboflow CLI
+
+## Authenticating with the Roboflow CLI
+
+Once you have the Roboflow CLI installed on your system, you will want to authorize it to access your workspaces. There is an auth flow built into Roboflow to do this, type:
+
+```
+roboflow auth
+```
+
+![](/images/api-reference/cli-auth.png)
+
+Authing the Roboflow CLI to access your workspaces
+
+This will open a browser window (or you can copy the URL it prints into a browser if your terminal doesn’t support opening a browser).
+
+You’ll sign in to Roboflow, if you are not already, and then a one-time auth token will be generated that you can paste into the CLI. If you have multiple workspaces, you can select exactly which ones you want to allow the CLI to access. When you paste the auth token into the CLI, you will get your API keys and some basic workspace information. 
+
+## Getting Started
+
+The Roboflow CLI has a variety of functionality which makes it useful for a variety of use cases. You can get project information using [roboflow project get](/api-reference/install-cli/roboflow-cli-documentation#roboflow-project-get) or run inference on a model using [roboflow infer](/api-reference/install-cli/roboflow-cli-documentation#roboflow-infer). [See more details on our dedicated CLI docs](/api-reference/install-cli/roboflow-cli-documentation).
+
+## See Also
+
+* [Roboflow CLI source code](https://github.com/roboflow/roboflow-cli)

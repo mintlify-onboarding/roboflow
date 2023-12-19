@@ -1,0 +1,37 @@
+---
+title: "Health Check"
+---
+
+Prefer to learn with video? We have a video tutorial that shows [how to use the dataset health check to improve model quality](https://youtu.be/aUFz6P4dtk4).
+
+Health Check shows a range of statistics about the dataset associated with a project. You can see the following pieces of information:
+
+* Number of images in your dataset;
+
+* Number of annotations;
+
+* Average image size;
+
+* Median image ratio;
+
+* Number of missing annotations;
+
+* Number of null annotations;
+
+* Image dimensions across your dataset;
+
+* [Object count histogram](https://youtu.be/wzZOQNRgq5g), and;
+
+* A heatmap of annotation locations.
+
+Using health check, you can derive a range of insights about your dataset. For example, if you have no null annotations, you may want to consider adding a few depending on the project on which you are working; if there are images with missing annotations, you can dig deeper to add the requisite annotations.
+
+See more on [the difference between null and missing annotations](https://blog.roboflow.com/missing-and-null-image-annotations/).
+
+### Class Balance
+
+The health check feature also shows class balance across your annotations. Class Balance shows how many of each object there are and easily visualizes class balance/imbalance. [Imbalanced data can yield unfavorable results, especially when measuring models with accuracy](https://blog.roboflow.com/handling-unbalanced-classes/).
+
+Here is an example of the class balance feature in use:
+
+![](/images/datasets/class-balance.png)

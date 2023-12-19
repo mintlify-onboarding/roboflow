@@ -1,0 +1,35 @@
+---
+title: "Train from Google Cloud"
+---
+
+_This training option is only available on_ [_Growth and Enterprise plans_](https://roboflow.com/pricing)_._
+
+## Google Cloud Platform Training Integration
+
+Once you've created a version of your dataset in Roboflow, you can export it directly to Google Cloud Platform Vision AutoML for training.
+
+### Pre-requisites:
+
+**Dataset version in Roboflow:**
+
+![](/images/train/image.png)
+
+**Google Cloud Platform account**
+
+### Training in Google Cloud Vision AutoML
+
+1\. Export your dataset in the "Google Cloud AutoML" format
+
+![](/images/train/image.png)
+
+2\. Copy the resulting link you're provided, and click "Continue to Cloud Vision." Ensure you're logged into Google Cloud Platform in the same browser as your Roboflow account.
+
+![](/images/train/image.png)
+
+3\. Once in Google Cloud Platform, select "New Dataset," the type of dataset you exported from Roboflow (e.g. Object Detection) and proceed by clicking "Create Dataset"
+
+![](/images/train/image.png)
+
+4\. Paste your link from Roboflow into the "Destination on Cloud Storage" bucket option.
+
+From here, your dataset version is successfully imported to GCP Vision AutoML, and you can proceed with training in GCP.

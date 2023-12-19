@@ -33,8 +33,20 @@
     ],
     "navigation": [
       {
-        "group": "",
-        "pages": [""]
+        "group": "Welcome to Roboflow",
+        "pages": [
+          "introduction",
+          "getting-started",
+          "roboflow-enterprise"
+        ]
+      },
+      {
+        "group": "Workspaces",
+        "pages": [
+          "workspaces/roboflow-workspaces",
+          "workspaces/adding-team-members-to-a-workspace",
+          "workspaces/role-based-access-control"
+        ]
       }
     ],
     "footerSocials":

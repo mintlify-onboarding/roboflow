@@ -1,0 +1,39 @@
+---
+title: "REST API Structure"
+---
+
+You can retrieve information about your Roboflow projects and datasets using the REST API.
+
+* `/` \- the [Root route](/api-reference/root) can be used to validate your API Key and find your workspace ID.
+
+* `/:workspace` \- the [Workspace route](/api-reference/workspace) gives you information about your workspace and a list of its projects.
+
+* `/:workspace/:project` \- the Project route shows information about a project and its versions.
+
+* `/:workspace/:project/:version` \- the Version route surfaces information about a version, its trained model (if present), and exported datasets.
+
+* `/:workspace/:project/:version/:format` \- the Format route is where you go to retrieve a download link for a zipped dataset in a particular [export format](https://roboflow.com/formats).
+
+### Routes
+
+To access the data for a resource, pass your `api_key` in the query string (in the documentation samples we have stored our `api_key` as an environment variable called `ROBOFLOW_API_KEY` which you could do with `export ROBOFLOW_API_KEY="xxxxxxx"` (see below for how to obtain your API key from your account).
+
+The data structure in Roboflow is largely hierarchical; the API layout matches this. [Workspaces](/api-reference/workspace) contain Projects which contain Versions which have trained models and are exported in various Formats.
+
+### Root Endpoint
+
+At the top level (`https://api.roboflow.com/`), you can verify your `api_key` is working. The response will tell you which `workspace` owns the key. 
+
+Example for the `roboflow` workspace:
+
+```
+$ curl "https://api.roboflow.com/?api_key=$ROBOFLOW_API_KEY"
+{
+    "welcome": "Welcome to the Roboflow API.",
+    "instructions": "You are successfully authenticated.",
+    "docs": "https://docs.roboflow.com",
+    "workspace": "roboflow"
+}
+```
+
+You can drill down into this workspace with its [Workspace endpoint](/api-reference/workspace) to access information about your projects.

@@ -1,0 +1,78 @@
+---
+title: "Inference"
+---
+
+Roboflow provides an API through which you can upload an image and retrieve predictions from your model. This API is available in the Roboflow Python SDK, REST API, and CLI.
+
+Python
+
+REST API
+
+CLI
+
+To run inference using the Python SDK, use the `predict()` method.
+
+```
+import roboflow
+
+rf = roboflow.Roboflow(api_key=YOUR_API_KEY_HERE)
+
+project = rf.workspace().project("PROJECT_ID")
+model = project.version("1").model
+
+# optionally, change the confidence and overlap thresholds
+# values are percentages
+model.confidence = 50
+model.overlap = 25
+
+# predict on a local image
+prediction = model.predict("YOUR_IMAGE.jpg")
+
+# Predict on a hosted image via file name
+prediction = model.predict("YOUR_IMAGE.jpg", hosted=True)
+
+# Predict on a hosted image via URL
+prediction = model.predict("https://...", hosted=True)
+
+# Plot the prediction in an interactive environment
+prediction.plot()
+
+# Convert predictions to JSON
+prediction.json()
+```
+
+### Use images in a Locally Running Inference Server Container
+
+If you have a locally running Roboflow inference server running through any of our container deploys, such as the [NVIDIA Jetson](/deploy/legacy-deployment/nvidia-jetson) or [Raspberry Pi](/deploy/raspberry-pi) container, you can use `version()` to point towards that locally running server instead of the remote endpoint by specifying the IP address of the locally running inference server. 
+
+The local inference server must be running and available for communication before executing the python script! When using our docker containers with the `--net=host` flag, we recommend referencing via the `localhost` format.
+
+```
+local_inference_server_address = "http://localhost:9001/"
+version_number = 1
+
+local_model = project.version(
+    version_number=version_number,
+    local=local_inference_server_address
+).model
+```
+
+The REST API has different endpoints depending on the type of project on which you want to run inference. Here is the relevant documentation for running inference for each project type:
+
+* [Object Detection](/deploy/hosted-api/object-detection)
+
+* [Classification](/deploy/hosted-api/classification)
+
+* [Instance Segmentation](/deploy/hosted-api/instance-segmentation)
+
+* [Semantic Segmentation](/deploy/hosted-api/semantic-segmentation)
+
+To run inference from the CLI, use this command:
+
+```
+roboflow infer -m / 
+```
+
+The `-m` option specifies which model and version should be used for inference. If you have trained your own custom model you can substitute the model/version for one of your own. This will work for object-detection, classification, instance segmentation, or semantic segmentation models.
+
+For more information about this CLI command, refer to the [inference section of the CLI docs](/api-reference/install-cli/roboflow-cli-documentation#roboflow-infer).
