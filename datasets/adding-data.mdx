@@ -1,0 +1,57 @@
+---
+title: "Upload Data"
+---
+
+You can upload images and annotations for object detection, classification, instance segmentation, and semantic segmentation.
+
+## How to Add Data
+
+You can add data to your Roboflow account by:
+
+* Using the Web Interface. **(Fastest for starting with** ≤**1000 images)**
+
+* Using our [API](/datasets/adding-data#uploading-data-with-the-api)
+
+* [Using an open source user generated dataset](https://universe.roboflow.com/)
+
+## Upload Data with the Web Interface
+
+To upload data, first create a project if you do not have one already. When you first create a project, you will be asked to upload images:
+
+![](/images/datasets/Screenshot%202023-06-22%20at%2008.53.39.png)
+
+If you already have a project, click "Upload" in the project sidebar to upload images.
+
+## Supported Data Types
+
+Roboflow can accept the following types of data:
+
+* JPG, PNG, and BMP images
+
+* MOV and mp4 videos
+
+* Data formatted in any [supported format](https://roboflow.com/formats) for classification, object detection, and segmentation.
+
+## Access Public Datasets
+
+[Roboflow Universe](https://universe.roboflow.com) is a repository of over 200,000 datasets covering object detection, classification, and segmentation tasks. You can use Universe to find data for use in training the first version of a model, or for use in fine-tuning a model.
+
+[Download from Roboflow Universe](/datasets/adding-data/roboflow-universe)
+
+## Duplicate Images
+
+If an image's content is the exact same, it will only counted towards your usage once. 
+
+For example, if you [merge two datasets](https://docs.roboflow.com/merge-datasets), the merged dataset and the two original datasets exist in your account. Therefore, there is no charge for the merge, because the images are duplicates.
+
+## Data Ownership
+
+We value our users' data ownership. As laid out in [our terms of service](https://roboflow.com/terms) (specificially in section 23B), you retain ownership over all images and videos you upload to Roboflow.
+
+> You retain all ownership rights in any content, information, or materials You post, submit, publish, display, or transmit
+
+## Data Privacy
+
+**Public Plan:** If you are on the Public plan unless explicitly specified and arranged by Roboflow, your datasets will be public on Roboflow Universe.
+
+**Paid Plans (including Enterprise):** Unless otherwise specified, your data is private to your account.

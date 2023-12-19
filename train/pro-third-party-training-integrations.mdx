@@ -1,0 +1,67 @@
+---
+title: "Train from Azure Vision"
+---
+
+_This training option is only available on_ [_Growth and Enterprise plans_](https://roboflow.com/pricing)_._
+
+## Microsoft Azure Custom Vision Training Integration
+
+Once you've created a version of your dataset in Roboflow, you can export it directly to Microsoft Azure Custom Vision for training.
+
+### Pre-requisites:
+
+A dataset version in Roboflow:
+
+![](/images/train/image.png)
+
+Example generated dataset version in Roboflow
+
+**A Custom Vision project in Microsoft Azure:** 
+
+![](/images/train/image.png)
+
+Example Custom Vision project in Microsoft Azure
+
+### Setup: Adding Your Microsoft Azure API Keys to Roboflow
+
+1\. Select your project name in Microsoft Azure
+
+![](/images/train/image.png)
+
+2\. Select API Key under "1" in order to take you to this page:
+
+![](/images/train/image.png)
+
+We'll copy the keys from this page to your Roboflow Workspace.
+
+3\. Navigate to your Roboflow Workspace's API keys in settings by clicking the dropdown menu n the Workspace.
+
+![](/images/train/image.png)
+
+You'll see "API Keys" as a sub menu:
+
+![](/images/train/image.png)
+
+4\. Copy **KEY 1** from your Microsoft Azure account to the **"training-key"** in Roboflow
+
+_NOTE: For datasets larger than 1000 images, Azure will require S0 pricing tier._
+
+5\. Update the **Endpoint** field in Roboflow to match the **Endpoint** field from your Microsoft Custom Vision project.
+
+From here, you're ready to start training with Roboflow and Microsoft Custom Azure together. Steps 1-5 only need to be completed once. To continue training with Azure, proceed.
+
+### Training in Azure Custom Vision
+
+6\. Once you've generated a dataset version, export the project as "Azure Custom Vision."
+
+![](/images/train/image.png)
+
+The project will automatically upload to your Azure account, and you'll be able to proceed with training there. 
+
+![](/images/train/image.png)
+
+(Note: ensure you're logged into your Microsoft Azure account in the same browser as your Roboflow account.)
+
+Your exported dataset version will appear directly in your Azure account.
+
+![](/images/train/image.png)

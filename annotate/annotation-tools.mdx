@@ -1,0 +1,31 @@
+---
+title: "Annotation Tools"
+---
+
+Roboflow Annotate provides a fast, robust interface through which you can annotate images.
+
+You can annotate images using bounding boxes and polygons.
+
+### Annotation Methods
+
+You can annotate images by:
+
+* Drawing bounding boxes and polygons manually
+
+* [Using Label Assist](/annotate/use-roboflow-annotate/model-assisted-labeling), a tool that uses model checkpoints (i.e. a previous version of your model) to recommend annotations
+
+* Using Smart Polygon, a feature that creates polygon annotations with a few clicks.
+
+* Using Label Assist with SAM, which uses the Segment Anything Model to create more precise polygon annotations with a few clicks.
+
+### Bounding Boxes vs. Polygons
+
+With the option between drawing bounding boxes and polygons, you may wonder: what is the difference between these two annotation types?
+
+Bounding boxes -- boxes drawn around an object of interest in an image -- are easier to draw than polygons, thus taking up less annotation time. Polygons, on the other hand, are more precise, and may lead to a slight increase in performance.
+
+For segmentation tasks, you need to annotate images with polygons, as you are training your model to segment specific items from an image with precision.
+
+This section of the Roboflow documentation shows how to annotate images using each of the above methods.
+
+_Roboflow is working on_ [_Autodistill_](https://github.com/autodistill/autodistill)_, an open source project that can help automatically label images for your computer vision project. Check out the_ [_Autodistill documentation_](https://docs.autodistil.com) _for more information on how to get started._

@@ -1,0 +1,134 @@
+---
+title: "Use Roboflow Annotate"
+---
+
+You can access the labeling interface by selecting an image from the Assign or Dataset pages on the Roboflow dashboard.
+
+On the right-hand side of the labeling interface, you will find the toolbar. The toolbar has many features you can use for annotating images.
+
+In this document, we talk through how to use the following features:
+
+* Drag and select
+
+* Bounding box annotation tool
+
+* Polgyon annotation tool
+
+* Smart polygon
+
+* Label assist
+
+* Zoom tool
+
+### Drag and Select
+
+Represented by a hand icon, this feature allows you to select, edit, and drag individual annotations.
+
+* **Single-click** an existing bounding box to select it. Once selected, you can change a bounding box's size with the circular white handles that appear on its corners and on each side. Or use the class editor to change the box's label.
+
+* **Drag a box** to move it.
+
+* **Drag the background** to pan.
+
+* **Click the background** to deselect all boxes.
+
+![](/images/annotate/image.png)
+
+Drag Tool (D) selection
+
+### Bounding Box Annotation Tool
+
+The bounding box annotation tool (represented by a rectangular box icon) allows you to draw new bounding-box annotations. In this mode, you will see crosshairs that will help you determine where to start drawing.
+
+Click and drag across an image to create a new annotation, then use the Class Selector to choose its label.
+
+![](/images/annotate/image.png)
+
+Bounding Box Tool (B) selection
+
+### Polygon Annotation Tool
+
+The polygon annotation tool allows you to [draw new polygonal annotations](https://blog.roboflow.com/polygon-annotation-labeling/). In this mode, you will see crosshairs that will help you determine where to start drawing.
+
+Click on the image around objects of interest to create an enclosed polygon annotation, then use the Class Selector to choose its label.
+
+
+![](/images/annotate/image.png)
+
+Polygon Tool (P) selection
+
+### Smart Polygon
+
+**Smart Polygon** allows you to draw new Smart Polygon annotations.
+
+In this mode, you will see a green dot when you are selecting a new area of interest (new label); a red dot when selecting areas to remove from the area of interest (parts of the object or image that you don't want to label/enclose with the polygon); and options to adjust the polygon by Convex Hull, Smooth, and Complex settings.
+
+Smart Polygon is particularly useful for (Instance and Semantic) Segmentation projects, however, you [may see performance boosts in Object Detection models](https://blog.roboflow.com/polygons-object-detection/) when labeling with Smart Polygons on Roboflow.
+
+![](/images/annotate/image.png)
+
+Smart Polygon (S) Tool selection
+
+### Label Assist
+
+[**Label Assist**](/annotate/use-roboflow-annotate/model-assisted-labeling) allows for the use of a Public Model (such as the COCO model) or one of your own [dataset versions](https://help.roboflow.com/workspaces-projects-and-versions) that was [trained with Roboflow Train](/train/train), for the automatic application of bounding box labels to images in your Annotation queue.
+
+### Mark Null
+
+Mark null (Null annotation) is to be used for the "labeling" of background, or null, images. This setting can also be used to clear all annotations from an image, or to mark the image as Unannotated. To learn more about null annotations, check out our guide "[The Difference Between Missing and Null Annotations](https://blog.roboflow.com/missing-and-null-image-annotations/)".
+
+![](/images/annotate/image.png)
+
+Mark Null (N) Tool selection
+
+### Undo, Redo, and Repeat Annotations
+
+While in Bounding Box (B), Polygon (P), or Smart Polygon (S) mode:
+
+* **Undo** reverts the previous action.
+
+* **Redo** reverses a previously undone action.
+
+* **Repeat Previous** reapplies label(s) on an image in the same location(s) as the last annotated image
+
+### Class Selection
+
+When an image is selected, the **Class Selector** will appear. It contains the following options for choosing the label of a bounding box:
+
+![](/images/annotate/image.png)
+
+The Class Selector
+
+* **Textfield** to create a new class or filter existing classes.
+
+* **Buttons** to save or discard your changes.
+
+* **Class List** of the existing classes in the dataset (filtered by the text field and with the active option highlighted in purple) and, sometimes, a "Create class" option if the text you typed does not match an existing class.
+
+### Zoom Tool
+
+The zoom tool found at the bottom left of the screen.
+
+* Zoom in and out to fit more of the image on your screen at one time or to get a closer look for more detailed editing. There is also an option to "lock" the zoom to a specified percentage, or reset the zoom to fit the entirety of the image within the Annotation Tool's viewport.
+
+* Note that if you select the "_Zoom Lock_" option, all images will appear at this zoom-level. Deselect, or unlock, the lock to remove Zoom Lock.
+
+![](/images/annotate/image.png)
+
+Zoom Tool
+
+### Annotation List
+
+Annotations (abbreviated _Annots_ in the dashbaord) show which classes are present and not present in an image, what color their boxes are, and layering of labels. The Annotations drawer includes Tags whichcan be used to help with organizing, filtering or sorting through images in datasets.
+
+![](/images/annotate/annots-drawer.png)
+
+Annotations (Annots) Sidebar
+
+### Image Attributes
+
+Attributes represent information about an image including its dimensions, last-modified time, and whether it is in this dataset's [training, validation, or test set](https://blog.roboflow.com/train-test-split/).
+
+![](/images/annotate/image.png)
+
+Attributes Sidebar

@@ -1,0 +1,92 @@
+---
+title: "Train a Model in Roboflow"
+---
+
+Roboflow offers versatility and flexibility in the form of training options between our in-house Auto ML to a wide array of detailed notebooks. 
+
+### Training Options
+
+You can train a model on Roboflow using the web interface, using our guided notebooks.
+
+#### Roboflow Train
+
+Roboflow Train is an AutoML solution that enables you to train a state-of-the-art computer vision model on your dataset. In a few clicks, you can train a computer vision model.
+
+When your model has trained, you can run inference using a range of deployment options, including in a web browser and on edge devices like an NVIDIA Jetson.
+
+For more details on how to train your model in Roboflow with one click, navigate to [our web interface training section](/train/train#training-a-model-from-the-web-interface) of this page.
+
+#### Notebooks
+
+You can also train your model on [one of our many notebooks](https://github.com/roboflow/notebooks) using our Python SDK. Once your model is trained, you can upload your model weights to Roboflow, where you can similarly run inference using our numerous deployment options.
+
+For more details on how to train your model using our notebooks, navigate to our [notebook training section](/train/train#training-a-model-using-our-notebooks) of this page.
+
+### Training a Model from the Web Interface
+
+To train a computer vision model, first generate a dataset version. Then, go to the Versions page associated with your dataset.
+
+Next, click the "Start Training" button:
+
+![](/images/train/Screenshot%202023-06-22%20at%2010.08.00.png)
+
+#### Training Types
+
+Roboflow supports three training options:
+
+* Fast
+
+* Accurate (object detection only)
+
+* Extra Large (object detection only)
+
+We recommend training a Fast model for the first versions of your project. As you refine your model, you can explore the Accurate and Extra Large options. Note that Accurate and Extra Large training and inference times are longer.
+
+After selecting a training option, you will be asked whether you want to train from a checkpoint. The tabs below show the configuration options for each model type.
+
+Object Detection
+
+Segmentation
+
+Classification
+
+![](/images/train/image.png)
+
+Training Options for Object Detection Projects
+
+![](/images/train/image.png)
+
+Training Options for Instance Segmentation Projects
+
+
+![](/images/train/image.png)
+
+Training Options for Classification Projects
+
+We recommend training from a Public Checkpoint for new object detection projects. By default, we offer training from a model trained on the Microsoft COCO dataset. For classification and segmentation, we only support training from an ImageNet or COCO checkpoint, respectively.
+
+You can train from checkpoints based on projects hosted on Universe (object detection only). To do so, first [star a project in Universe](https://blog.roboflow.com/launch-universe-model-checkpoint/). Then, the project will be available as a training checkpoint in the Roboflow web application.
+
+Furthermore, you can train from a checkpoint based on a previous version of a model (object detection only). This method allows for a faster training process. We only recommend training from a previous checkpoint for your model if your model achieves strong performance).
+
+Training from a Checkpoint means that you are employing [Transfer Learning](https://blog.roboflow.com/what-is-transfer-learning/). Transfer Learning will initialize your model training from the model you have selected. This can help to reduce training time, and provide you with improved training scores.
+
+Training from Scratch means that you are _not_ employing Transfer Learning. This will initialize your model training with randomized initial values for the model weights.
+
+#### Training Time
+
+The larger the dataset, and the larger the images in your dataset, the longer it will take for your model to train.
+
+We will email you when the training process finished. In most cases, this should be under 24 hours.
+
+#### Pricing
+
+Roboflow Train credits are available in your workspace depending on which [plan you have selected for the workspace](https://roboflow.com/pricing). Training a model costs one credit and takes between 1 and 24 hours depending on the size of your dataset. [Contact our sales team](https://roboflow.com/sales) to upgrade your plan if you need more train credits.
+
+If you are a student or researcher and need credits for a project on which you are working, you can [apply for additional credits](https://roboflow.com/contribute).
+
+### Training a Model Using Our Notebooks
+
+From the latest YOLO models to CLIP classification, we offer a wide range of guided training notebooks that you can use to train your models. 
+
+We also have the ability to upload your model weights to Roboflow to use with Label Assist and Roboflow Deploy for select models. To see which models are compatible, [check out our page on uploading weights](/deploy/upload-custom-weights).

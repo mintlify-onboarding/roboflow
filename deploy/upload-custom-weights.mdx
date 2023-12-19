@@ -1,0 +1,58 @@
+---
+title: "Upload Custom Weights"
+---
+
+Once you've completed training your custom model, upload your model weights back to your Roboflow project to take advantage of [Roboflow Inference](https://inference.roboflow.com/).
+
+Model weights uploads are currently available for:
+
+* YOLOv5 (n, s, m, l, x) Object Detection and Instance Segmentation
+
+* YOLOv7 Instance Segmentation (yolov7-seg)
+
+* YOLOv8 (n, s, m, l, x) Object Detection, Instance Segmentation, and Classification
+
+After successfully training your custom YOLOv5, YOLOv7 or YOLOv8 model, use the `.deploy()` function to upload your model weights back to your Roboflow Object Detection project.
+
+Model weights uploads are only available for dataset versions _without_ a trained model (i.e not yet trained with Roboflow Train, and no YOLOv5, YOLOv7 or YOLOv8 model weights uploaded).
+
+NOTE: _Larger model sizes provide better training results. However, the larger the model size, the slower the training time, and inference (model prediction) speed_. Consider whether you're looking for real-time inference on fast-moving objects or video feeds (better to use a smaller model), or you are processing data _after_ it is collected, and more concerned with higher prediction accuracy (choose a larger model).
+
+### Upload Custom Weights
+
+Python SDK
+
+You need `roboflow>=1.0.1` and ultralytics==8.0.196 to use the`.deploy() `command.
+
+To upload custom weights, use the `model.deploy()` method in the Python SDK.
+
+```
+version = project.version(1)
+version.deploy("model-type", "path/to/training/results/")
+```
+
+The following model types are supported:
+
+* yolov5, yolov5-seg
+
+* yolov7, yolov7-seg
+
+* yolov8, yolov8-seg, yolov8-cls
+
+If weights upload is attempted for dataset versions that already have a trained model (a Roboflow Train model or uploaded YOLOv5, YOLOv7 or YOLOv8 weights) then you will receive a `RuntimeError` \- `"This version already has a trained model. Please generate and train a new version in order to upload model to Roboflow."`
+
+If upload is attempted for a model architecture that is not yet supported for weights upload, then you will receive a `ValueError`.
+
+## Next Steps
+
+1. 1.  
+Test your model in the [Deploy Tab](https://blog.roboflow.com/deploy-tab).
+
+2. 2.  
+Run your model locally with [Roboflow Inference Server](https://inference.roboflow.com/).
+
+3. 3.  
+Deploy your Model with Roboflow Deploy.
+
+4. 4.  
+Improve your Model with [Active Learning](/api-reference/active-learning).

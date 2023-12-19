@@ -1,0 +1,40 @@
+---
+title: "Create a Project"
+---
+
+### Projects in Roboflow
+
+A project houses the images and annotations for your project. All projects exist within one workspace. Once images are annotated, they can generate a version, which is a copy of your images and annotations at the time, augmented and processed with the configuration you select. 
+
+A project has a name, a type (ex: object detection) and an annotation group. For more information, take a look at the process of [creating a project](/datasets/create-a-project).
+
+### Create a Project
+
+First, go to the Roboflow dashboard. Then, click "Create New Project":
+
+![](/images/datasets/Screenshot%202023-06-22%20at%2008.58.16.png)
+
+You will be asked to specify:
+
+1. 1.  
+**A project type**. Here is a brief summary of each project type:  
+   1. 1.  
+   _**Object Detection**_: Find the location of objects in an image.  
+   2. 2.  
+   _**Single-Label Classification**_: Given a limited set of categories, assign a label to an image.  
+   3. 3.  
+   _**Multi-Label Classification**_: Given a limited set of categories, assign an arbitrary number of labels that are relevant to the image.  
+   4. 4.  
+   _**Instance Segmentation**_: To the pixel level, find the location of objects in an image.  
+   5. 5.  
+   _**Semantic Segmentation**_: To the pixel level, find the location of objects in an image and create unique references for each object found.
+
+2. 2.  
+**A project name:** The name of your project.
+
+3. 3.  
+**What you are detecting**: A label that summarizes what you are detecting.
+
+When you have specified these values, submit the form to create the project.
+
+_If you would like to see another type of project supported -- such as keypoint detection -- you can select the option from the dropdown of project types to indicate your interest._
